@@ -99,18 +99,13 @@ module.exports = {
                 Object.entries(req.query).filter(([_, v]) => v != null && v !== "")
             );
 
-            let products = await prisma.product.findMany({
-                include: {
-                    category: true,
-                    company: true
-                }
-            })
+            let products = await prisma.product.findMany()
 
             if(filter.category) {
-                products = products.filter(product => product.category.name == filter.category)
+                products = products.filter(product => product.categoryId == filter.categoryId)
             }
             if(filter.company) {
-                products = products.filter(product => product.company.name == filter.company)
+                products = products.filter(product => product.companyId== filter.companyId)
             }
             if(filter.value_min) {
                 products = products.filter(product => product.title == filter.value_min)
