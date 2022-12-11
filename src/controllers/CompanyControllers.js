@@ -5,12 +5,12 @@ const prisma = new PrismaClient()
 module.exports = {
     async create(req, res){
         try {
-            const {name, description} = req.body
+            const {name, location} = req.body
 
-            const result = await prisma.category.create({
+            const result = await prisma.company.create({
                 data: {
                     name: name,
-                    description: description
+                    location: location
                 }
             })
 
@@ -24,21 +24,21 @@ module.exports = {
     async update(req, res) {
         try {
 
-            const categoryId = parseInt(req.params.categoryId)
-            const currentCategory = await prisma.category.findUnique({where: {id: categoryId}})
+            const companyId = parseInt(req.params.companyId)
+            const currentCompany = await prisma.company.findUnique({where: {id: companyId}})
 
-            if(currentCategory.length != 0){
-                return res.status(404).json({status: 400, message: "Categoria não encontrada!"})
+            if(currentCompany.length != 0){
+                return res.status(404).json({status: 400, message: "Empresa não encontrada!"})
             }
 
-            const {name, description} = req.body
-            const result = await prisma.category.update({
+            const {name, location} = req.body
+            const result = await prisma.company.update({
                 where: {
-                    id: categoryId
+                    id: companyId
                 },
                 data: {
-                    name: name || currentCategory.name,
-                    description: description || currentCategory.description
+                    name: name || currentCompany.name,
+                    location: location || currentCompany.location
                 }
             })
 
@@ -51,11 +51,11 @@ module.exports = {
 
     async delete(req, res){
         try {
-            const categoryId = parseInt(req.params.categoryId)
+            const companyId = parseInt(req.params.companyId)
 
-            const result = await prisma.category.delete({
+            const result = await prisma.company.delete({
                 where: {
-                    id: categoryId
+                    id: companyId
                 }
             })
 
@@ -68,15 +68,15 @@ module.exports = {
 
     async find(req, res){
         try {
-            const categoryId = parseInt(req.params.categoryId)
+            const companyId = parseInt(req.params.companyId)
 
-            const category = await prisma.category.findUnique({
+            const company = await prisma.company.findUnique({
                 where: {
-                    id: categoryId
+                    id: companyId
                 }
             })
             
-            res.status(200).json(category)
+            res.status(200).json(company)
 
         } catch (error) {
             return res.status(400).json({status:400, message: error.message})
@@ -86,7 +86,7 @@ module.exports = {
     async findAll(req, res){
         try {
 
-            let categories = await prisma.category.findMany({
+            let categories = await prisma.company.findMany({
                 include: {
                     products: true
                 }

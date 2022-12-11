@@ -37,7 +37,7 @@ model Category{
 model Company{
     id              Int         @id @default(autoincrement())
     name            String      @unique
-    Location        String  
+    location        String  
     products        Product[]   
     createdAt       DateTime    @default(now())
     updatedAt       DateTime    @updatedAt
