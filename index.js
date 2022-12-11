@@ -9,5 +9,5 @@ app.use(express.json())
 app.use(routes)
 
 app.listen(process.env.PORT || 3001, function(){
-    console.log(`SERVER IS RUNNIN ON PORT: ${this.adress().port}`)
+    console.log(`SERVER IS RUNNIN ON PORT: ${process.env.PORT}`)
 })

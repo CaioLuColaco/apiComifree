@@ -13,7 +13,7 @@ module.exports = {
                     description: description,
                     price: price, 
                     quantity: quantity, 
-                    validity: validity, 
+                    validity: new Date(validity), 
                     categoryId: categoryId, 
                     companyId: companyId
                 }
@@ -32,7 +32,7 @@ module.exports = {
             const productId = parseInt(req.params.productId)
             const currentProduct = await prisma.product.findUnique({where: {id: productId}})
 
-            if(currentProduct.length != 0){
+            if(currentProduct.length == 0){
                 return res.status(404).json({status: 400, message: "Produto não encontrado!"})
             }
 
@@ -46,7 +46,7 @@ module.exports = {
                     description: description || currentProduct.description,
                     price: price || currentProduct.price, 
                     quantity: quantity || currentProduct.quantity, 
-                    validity: validity || currentProduct.validity, 
+                    validity: new Date(validity) || currentProduct.validity, 
                     categoryId: categoryId || currentProduct.categoryId, 
                     companyId: companyId || currentProduct.companyId
                 }

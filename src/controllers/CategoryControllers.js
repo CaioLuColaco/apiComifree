@@ -27,7 +27,7 @@ module.exports = {
             const categoryId = parseInt(req.params.categoryId)
             const currentCategory = await prisma.category.findUnique({where: {id: categoryId}})
 
-            if(currentCategory.length != 0){
+            if(currentCategory.length == 0){
                 return res.status(404).json({status: 400, message: "Categoria não encontrada!"})
             }
 
@@ -73,6 +73,9 @@ module.exports = {
             const category = await prisma.category.findUnique({
                 where: {
                     id: categoryId
+                },
+                include: {
+                    products: true
                 }
             })
             

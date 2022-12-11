@@ -27,7 +27,7 @@ module.exports = {
             const companyId = parseInt(req.params.companyId)
             const currentCompany = await prisma.company.findUnique({where: {id: companyId}})
 
-            if(currentCompany.length != 0){
+            if(currentCompany.length == 0){
                 return res.status(404).json({status: 400, message: "Empresa não encontrada!"})
             }
 
@@ -73,6 +73,9 @@ module.exports = {
             const company = await prisma.company.findUnique({
                 where: {
                     id: companyId
+                },
+                include: {
+                    products: true
                 }
             })
             
